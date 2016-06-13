@@ -1,13 +1,15 @@
 <?php
-class baseDeDados
+namespace Alfa;
+
+class BaseDeDados
 {
 	public $conexao;
 	public $nome;
 	public $dependencia;
 
-	function __construct($nome, sgbd $servidor)
-    {	
-        $this->nome = $nome;
+	function __construct($nome, SGBD $servidor)
+	{		
+		$this->nome = $nome;
 		$this->dependencia = $servidor;
 	}
 
@@ -17,7 +19,7 @@ class baseDeDados
 			$this->conexao = mysqli_connect($this->dependencia->getEndereco(), $this->dependencia->usuario, $this->dependencia->senha, $this->nome);
 
 			if (!$this->conexao) {
-				throw new Exception(mysqli_connect_error());
+				throw new \Exception(mysqli_connect_error());
 			}
 		}
 	}
@@ -28,6 +30,11 @@ class baseDeDados
 			mysqli_close($this->conexao);
 			$this->conexao = NULL;
 		}
+	}
+
+	public static function log($msg)
+	{
+		file_put_contents('/var/log/hoje.log', $msg);
 	}
 
 	public function __destruct()

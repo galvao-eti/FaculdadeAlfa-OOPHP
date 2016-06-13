@@ -1,14 +1,21 @@
 <?php
-require '../../class/sgbd.php';
-require '../../class/baseDeDados.php';
+require '../../autoload.php';
 
-$servidor = new sgbd('mysql');
-$servidor->setEndereco('localhost');
+use Alfa\SGBD;
+
+
+$servidor = new SGBD('mysql');
+$servidor->endereco = 'localhost';
+
+echo $servidor->endereco;
+
+die();
+
 $servidor->setPorta(3306);
 $servidor->usuario = 'root';
 $servidor->senha = 'mysql';
 
-$base = new baseDeDados('mysql', $servidor);
+$base = new Alfa\BaseDeDados('mysql', $servidor);
 
 try {
 	$base->conectar();
